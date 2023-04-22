@@ -1,0 +1,37 @@
+import requests
+
+print("Welcome to the Currency Converter!\n")
+
+# Supported currencies
+currencies = {
+    "USD": "US Dollar",
+    "EUR": "Euro",
+    "GBP": "British Pound",
+    "JPY": "Japanese Yen",
+    "CAD": "Canadian Dollar",
+    "AUD": "Australian Dollar",
+    "NZD": "New Zealand Dollar",
+    "CHF": "Swiss Franc",
+    "HKD": "Hong Kong Dollar",
+    "SGD": "Singapore Dollar"
+}
+
+# Print list of supported currencies
+print("Supported currencies:")
+for key, value in currencies.items():
+    print(f"{key} - {value}")
+
+# Get user input for conversion
+from_currency = input("\nEnter the currency code you want to convert from: ").upper()
+to_currency = input("Enter the currency code you want to convert to: ").upper()
+amount = float(input("Enter the amount you want to convert: "))
+
+# Make API request for currency conversion
+url = f"https://api.exchangerate-api.com/v4/latest/{from_currency}"
+response = requests.get(url)
+data = response.json()
+conversion_rate = data["rates"][to_currency]
+
+# Calculate and display converted amount
+converted_amount = amount * conversion_rate
+print(f"\n{amount:.2f} {from_currency} = {converted_amount:.2f} {to_currency}")
